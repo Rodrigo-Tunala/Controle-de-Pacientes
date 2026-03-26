@@ -8,64 +8,65 @@ const creatDb = async () => {
         filename: './database.db',
         driver: sqlite3.Database
     })
-    // Criar a tabela de pacientes e atendimentos
+    
     await db.exec(`
-    CREATE TABLE IF NOT EXISTS pacientes (
+    CREATE TABLE IF NOT EXISTS patients (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
-        date_of_birth INTEGER,
+        date_of_birth TEXT,
         telephone TEXT,
         address TEXT,
         routine TEXT
-        
-        `)
+    )`)
 
     console.log('Tabela de pacientes criada com sucesso!')
 
     await db.exec(`
-        CREATE TABLE IF NOT EXISTS atendimentos (
+        CREATE TABLE IF NOT EXISTS services (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             patient_id INTEGER,
-            date INTEGER,
+            date TEXT,
             description TEXT,
             evolution TEXT,
             observations TEXT,
-            FOREIGN KEY (patient_id) REFERENCES pacientes(id)
+            FOREIGN KEY (patient_id) REFERENCES patients(id)
         )
     `)
 
     console.log('Tabela de atendimentos criada com sucesso!')
 
     
-    const checking = await db.get('SELECT * FROM pacientes and atendimentos')
+    const checking = await db.get(`SELECT * FROM patients`)
 
     if (!checking) {
         await db.exec(`
-            INSERT INTO pacientes (name, date_of_birth, telephone, address, routine) 
+            INSERT INTO patients (name, date_of_birth, telephone, address, routine) 
             VALUES
             (
-                'João Silva', 1990-01-01, '11123456789', 'Rua A, 123', 'injeção para diabetes'
-
+                'João Silva', '1990-01-01', '11123456789', 'Rua A, 123', 'injeção para diabetes'
             ),
             (
-                'Maria Souza', 1985-05-15, '11987654321', 'Rua B, 456', 'medicação para hipertensão'
+                'Maria Souza', '1985-05-15', '11987654321', 'Rua B, 456', 'medicação para hipertensão'
             ),
             (
-                'Carlos Oliveira', 1978-10-20, '11999999999', 'Rua C, 789', 'fisioterapia para dor nas costas'
+                'Carlos Oliveira', '1978-10-20', '11999999999', 'Rua C, 789', 'fisioterapia para dor nas costas'
             ),
             (
-                'Ana Santos', 1995-03-30, '11888888888', 'Rua D, 321', 'consulta de rotina'
+                'Ana Santos', '1995-03-30', '11888888888', 'Rua D, 321', 'consulta de rotina'
             )
-            
-        `)
+        
+            `)
     }else {
         console.log('Dados já existem no banco de dados.')
     }
 
 
-    return db
+    return db;
 
 
 
 
 }
+
+
+module.exports = { creatDb };
