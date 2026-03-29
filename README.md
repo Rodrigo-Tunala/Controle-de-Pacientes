@@ -62,7 +62,7 @@ Página inicial com instruções de uso.
 ```html
 Sistema de Gerenciamento de Pacientes
 Bem-vindo ao sistema!
-use as rotas /pacientes e /pacientes/:id/atendimentos para acessar os dados dos pacientes e atendimentos.
+use as rotas /patients e /patients/:id/services para acessar os dados dos pacientes e atendimentos.
 ```
 
 ### GET `/patients`
@@ -74,12 +74,33 @@ Retorna a lista de todos os pacientes cadastrados.
   {
     "id": 1,
     "name": "João Silva",
-    "date_of_birth": "1990-01-01",
+    "date_of_birth": "01/01/1990",
     "telephone": "11123456789",
     "address": "Rua A, 123",
     "routine": "injeção para diabetes"
   }
 ]
+```
+
+### POST `/patients`
+Cria um novo paciente no sistema.
+
+**Corpo da Requisição:**
+```json
+{
+  "name": "Thiago Souza",
+  "date_of_birth": "08/03/1998",
+  "telephone": "11123456789",
+  "address": "Rua A, 123",
+  "routine": "Rotina médica"
+}
+```
+
+**Resposta:**
+```json
+{
+  "message": "Paciente adicionado com sucesso"
+}
 ```
 
 ### GET `/patients/:id/services`
@@ -95,7 +116,7 @@ Retorna um paciente específico e seus atendimentos.
     "id": 1,
     "name": "João Silva",
     "id_service": 1,
-    "date": "2024-03-28",
+    "date": "28/03/2024",
     "description": "Consulta de rotina",
     "evolution": "Paciente em bom estado",
     "observations": "Continuar medicação"
@@ -115,7 +136,7 @@ Cria um novo atendimento para um paciente específico.
 **Corpo da Requisição:**
 ```json
 {
-  "date": "2024-03-28",
+  "date": "28/03/2024",
   "description": "Consulta de rotina",
   "evolution": "Paciente em bom estado",
   "observations": "Prescrever novo medicamento"
@@ -139,9 +160,10 @@ Atualiza os dados de um paciente específico.
 ```json
 {
   "name": "João Silva Santos",
-  "email": "joao@email.com",
+  "date_of_birth": "01/01/1990",
+  "telephone": "11999999999",
   "address": "Rua B, 456",
-  "phone": "11999999999"
+  "routine": "Nova rotina"
 }
 ```
 
@@ -165,7 +187,7 @@ Atualiza um atendimento específico de um paciente.
 **Corpo da Requisição:**
 ```json
 {
-  "date": "2024-03-28",
+  "date": "28/03/2024",
   "description": "Consulta de revisão",
   "evolution": "Paciente apresenta melhora",
   "observations": "Agendar próxima consulta em 30 dias"

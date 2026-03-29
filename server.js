@@ -95,7 +95,7 @@ app.post(`/patients/:id/services`, async (req, res) => {
 app.put('/patients/:id', async (req, res) => {
 
     const { id } = req.params;
-    const { name, email, address, phone } = req.body;
+    const { name, date_of_birth, telephone, address, routine } = req.body;
 
     const db = await creatDb();
 
@@ -105,7 +105,7 @@ app.put('/patients/:id', async (req, res) => {
         return res.status(404).json({ error: 'Paciente não encontrado' });
     }
 
-    await db.run(`UPDATE patients SET name = ?, email = ?, address = ?, phone = ? WHERE id = ?`, [name, email, address, phone, id]);
+    await db.run(`UPDATE patients SET name = ?, date_of_birth = ?, telephone = ?, address = ?, routine = ? WHERE id = ?`, [name, date_of_birth, telephone, address, routine, id]);
 
     res.json({ message: 'Paciente atualizado com sucesso' });
 
