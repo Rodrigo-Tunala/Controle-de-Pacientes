@@ -61,6 +61,20 @@ app.get('/patients/:id/services', async (req, res) => {
     res.json(patient_services);
 })
 
+app.post('/patients', async (req, res) => {
+
+    const { name, date_of_birth, telephone, address, routine } = req.body;
+
+    const db = await creatDb();
+
+    await db.run(`INSERT INTO patients (name, date_of_birth, telephone, address, routine) VALUES (?, ?, ?, ?, ?)`, [name, date_of_birth, telephone, address, routine]);
+
+    res.json({ message: 'Paciente adicionado com sucesso' });
+
+});
+
+
+
 app.post(`/patients/:id/services`, async (req, res) => {
 
     const {date, description, evolution, observations } = req.body;
